@@ -18,7 +18,7 @@ define('DB_PERSISTENT', true);
 
 
 //define('BASEPATH', 'http://localhost:8080/Magdalene/');
-define('BASEPATH', 'http://172.29.98.212:8080/Magdalene/');
+define('BASEPATH', 'http://172.29.98.212:8080/Curriculum-Submission-Network/');
 
 
 /*define('DB_HOSTNAME', 'localhost');
