@@ -3,39 +3,30 @@
 class Model 
 {
     protected $db;
-    //protected $_sql;
      
     public function __construct()
     {
         $this->db = Db::init();
     }
-     
-   /* protected function _setSql($sql)
+ 
+    public function getAll($sql, $data = null)
     {
-        $this->_sql = $sql;
+        if(!sql){
+            throw new Exception("No SQL query!");
+        }         
+        $query = $this->db->prepare($sql);
+        $query->execute($data);
+        return $query->fetchAll();
     }
      
-    public function getAll($data = null)
+    public function getRow($sql, $data = null)
     {
-        if (!$this->_sql)
-        {
+        if(!sql){
             throw new Exception("No SQL query!");
-        }
-         
-        $sth = $this->_db->prepare($this->_sql);
-        $sth->execute($data);
-        return $sth->fetchAll();
+        }         
+        $query = $this->db->prepare($sql);
+        $query->execute($data);
+        return $query->fetch();
     }
-     
-    public function getRow($data = null)
-    {
-        if (!$this->_sql)
-        {
-            throw new Exception("No SQL query!");
-        }
-         
-        $sth = $this->_db->prepare($this->_sql);
-        $sth->execute($data);
-        return $sth->fetch();
-    }*/
+
 }

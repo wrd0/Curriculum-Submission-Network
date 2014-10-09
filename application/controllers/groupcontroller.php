@@ -2,9 +2,9 @@
  
 class GroupController extends Controller
 {
-    public function __construct($model, $action)
+    public function __construct()
     {
-        parent::__construct($model, $action);
+        parent::__construct();
         session_start();
         $this->loadModel('groupmodel','groups');
     }

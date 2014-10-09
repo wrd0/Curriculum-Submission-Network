@@ -9,6 +9,9 @@ define('DB_DRIVER',   'pgsql');
 define('DB_PERSISTENT', true);
 */
 
+ini_set('display_errors', 1);
+define('DEFAULT_CONTROLLER', 'home');
+
 define('DB_HOSTNAME', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', '');

@@ -8,12 +8,8 @@ class UserModel extends Model
      */
     public function getUsers()
     {
-        $sql = "SELECT * FROM users";     
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $users = $query->fetchAll();
-         
-        return $users;
+        $sql = "SELECT * FROM users";  
+        return  $this->getAll($sql);
     }
 
      /**
@@ -32,15 +28,11 @@ class UserModel extends Model
         if(isset($password)){
             $sql = "select user_id,username,firstname,lastname,email,profilepic 
                     from users where (username = ? or email = ?) and password = ?";
-            $query = $this->db->prepare($sql);
-            $query->execute(array($username,$username,$password));
-            $user = $query->fetch();
+            $user = $this->getRow($sql, array($username,$username,$password));
         }else{
             $sql = "select user_id,username,firstname,lastname,email,profilepic 
                     from users where username = ?";
-            $query = $this->db->prepare($sql);
-            $query->execute(array($username));
-            $user = $query->fetch();
+            $user = $this->getRow($sql, array($username));
         }        
         
         return $user;
@@ -55,10 +47,8 @@ class UserModel extends Model
         $sql = "SELECT username,firstname,lastname,profilepic,comment_id,comment,datetime FROM comment 
                 INNER JOIN users ON users.user_id = comment.user_id 
                 WHERE comment_type = 2 and anchor_id = ? ORDER BY comment_id ASC";
-        $query = $this->db->prepare($sql);
-        $query->execute(array($user_id));
          
-        return  $query->fetchAll();
+        return  $this->getAll($sql, array($user_id));
     }
 
     public function postProfileComment($user_id,$anchor_id,$comment,$type){

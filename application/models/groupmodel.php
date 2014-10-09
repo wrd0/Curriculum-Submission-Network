@@ -15,9 +15,8 @@ class GroupModel extends Model
                 INNER join assignment1.group on assignment1.group.group_id = group_users.group_id
                 INNER join users on chair = users.user_id
                 where assignment1.group_users.user_id = ? or chair = ?";*/
-        $query = $this->db->prepare($sql);
-        $query->execute(array($user_id,$user_id));
-        $groups = $query->fetchAll();
+        
+        $groups = $this->getAll($sql, array($user_id,$user_id));
 
         //Generate the group url by appending the lowercase group name without spaces with the group id
         foreach($groups as $key => $group){
@@ -35,9 +34,7 @@ class GroupModel extends Model
     public function getGroup($group_url){
         $group_id = preg_replace("/[^0-9]/", "", $group_url); //extracts the groupId from url
         $sql = "SELECT * FROM assignment1.group WHERE group_id = ?";
-        $query = $this->db->prepare($sql);
-        $query->execute(array($group_id));
-        $group = $query->fetch();
+        $group = $this->getRow($sql, array($group_id));
 
         // seems ugly but it checks that the prefix of the url is correct - (temporal)
         if($group!=false){
@@ -56,9 +53,7 @@ class GroupModel extends Model
      */
     public function getGroupList(){
         $sql = "SELECT group_id,name,description FROM assignment1.group";
-        $query = $this->db->prepare($sql);
-        $query->execute();
-        $groups = $query->fetchAll();
+        $groups = $this->getAll($sql);
 
         foreach($groups as $key => $group){
             $groups[$key]['group_url'] = $this->stringToLowerNoSpace($group['name']).$group['group_id'];
@@ -76,10 +71,8 @@ class GroupModel extends Model
         $sql = "SELECT users.user_id,username,firstname,lastname,email,profilepic,since FROM group_users 
                 INNER JOIN users ON users.user_id = group_users.user_id
                 WHERE group_id = ?";
-        $query = $this->db->prepare($sql);
-        $query->execute(array($group_id));
-        
-        return $query->fetchAll();
+
+        return $this->getAll($sql, array($group_id));
     }
 
     /**
@@ -91,10 +84,8 @@ class GroupModel extends Model
         $sql = "SELECT username,firstname,lastname,email,profilepic,chair_since FROM assignment1.group 
                 INNER JOIN users ON assignment1.group.chair = users.user_id
                 WHERE group_id = ?";
-        $query = $this->db->prepare($sql);
-        $query->execute(array($group_id));
 
-        return $query->fetch();
+        return $this->getRow($sql, array($group_id));
     }
 
     public function stringToLowerNoSpace($string){

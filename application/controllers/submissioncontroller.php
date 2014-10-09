@@ -1,9 +1,9 @@
 <?php 
 class SubmissionController extends Controller
 {
-    public function __construct($model, $action)
+    public function __construct()
     {
-        parent::__construct($model, $action);
+        parent::__construct();
 
         session_start();
          if(!isset($_SESSION['username'])){ //if user is not logged in redirect to login

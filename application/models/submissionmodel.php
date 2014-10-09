@@ -4,10 +4,8 @@ class SubmissionModel extends Model
     public function getSubmissions($user_id)
     {
         $sql = "SELECT * FROM submission WHERE user_id = ?";     
-        $query = $this->db->prepare($sql);
-        $query->execute(array($user_id));
          
-        return  $query->fetchAll();
+        return  $this->getAll($sql, array($user_id));
     }
 
     public function getAllSubmissions()
@@ -16,10 +14,8 @@ class SubmissionModel extends Model
                 INNER JOIN users ON users.user_id = submission.user_id
                 INNER JOIN type ON submission.type = id_type
                 WHERE status > 0 ORDER BY submission_id DESC";
-        $query = $this->db->prepare($sql);
-        $query->execute();
          
-        return  $query->fetchAll();
+        return  $this->getAll($sql);
     }
 
     public function newSubmission($user_id,$title,$desc,$doc,$group,$type,$status){
@@ -36,10 +32,8 @@ class SubmissionModel extends Model
         $sql = "SELECT username,firstname,lastname,profilepic,comment_id,comment,datetime FROM comment 
                 INNER JOIN users ON users.user_id = comment.user_id 
                 WHERE comment_type = 1 and anchor_id = ? ORDER BY comment_id ASC";
-        $query = $this->db->prepare($sql);
-        $query->execute(array($id));
-         
-        return  $query->fetchAll();
+       
+        return  $this->getAll($sql,array($id));
     }
 
     public function getStepsToSubmission($group_id,$type){
@@ -50,10 +44,8 @@ class SubmissionModel extends Model
                 INNER JOIN flow_step ON step_id = flow_step_id
                 WHERE group.group_id = ? and type.id_type = ?
                 ORDER BY sequence";
-        $query = $this->db->prepare($sql);        
-        $query->execute(array($group,$type));
-         
-        return  $query->fetchAll();
+
+        return  $this->getAll($sql,array($group,$type));
     }
 
 } 

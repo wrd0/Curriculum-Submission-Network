@@ -2,9 +2,9 @@
  
 class LoginController extends Controller
 {
-    public function __construct($model, $action)
+    public function __construct()
     {
-        parent::__construct($model, $action);       
+        parent::__construct();       
         $this->loadModel('usermodel','users');
     }
      

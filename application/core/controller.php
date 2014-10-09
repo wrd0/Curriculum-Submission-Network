@@ -2,18 +2,13 @@
  
 class Controller
 {
-    protected $_controller;
     protected $_model = array();
      
-    public function __construct()
-    {
-        $this->_controller = ucwords(__CLASS__);
-    }
+    public function __construct(){}
      
     protected function loadModel($modelName,$name)
     {        
        $this->_model[$name] = new $modelName();
-      //  extract($this->_model,EXTR_OVERWRITE|EXTR_REFS);
     }
 
     protected function useModel($name){
